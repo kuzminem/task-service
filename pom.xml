@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ru.service.task</groupId>
-    <artifactId>project-helpdesk</artifactId>
+    <groupId>task-service</groupId>
+    <artifactId>task-service</artifactId>
     <version>2.0</version>
     <name>task-service</name>
     <description>task-service</description>
     <properties>
         <java.version>8</java.version>
-        <org.springframework.boot.version>2.6.6</org.springframework.boot.version>
+        <org.springframework.boot.version>2.7.0</org.springframework.boot.version>
     </properties>
 
     <dependencies>
@@ -45,19 +45,20 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.6.7.Final</version>
+            <!-- Не обновлять -->
+            <version>5.6.10.Final</version>
         </dependency>
         <!-- PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.3</version>
+            <version>42.3.6</version>
         </dependency>
         <!-- Mapper -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.4.2.Final</version>
+            <version>1.5.1.Final</version>
         </dependency>
         <!-- liquibase -->
     </dependencies>
