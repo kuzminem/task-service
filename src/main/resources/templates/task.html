@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Helpdesk</title>
+    <meta charset="UTF-8">
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <input class="red" type="button" value="<" title="Вернуться" onclick="location.href='/'" />
+        <span sec:authorize="hasRole('ROLE_USER')" th:text="${'Пользователь '+#authentication.name}"></span>
+        <span sec:authorize="hasRole('ROLE_EXECUTOR')" th:text="${'Исполнитель '+#authentication.name}"></span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+    <div>
+        <div class="block">
+            <ul>
+                <li th:text="${'Заявка номер '+task.id}"></li>
+                <li th:text="${'Открыта '+task.filingDate}"></li>
+                <li th:text="${'Регламентная дата исполнения '+task.completionDate}"></li>
+                <li sec:authorize="hasRole('ROLE_USER')" th:text="${'Статус: '+task.status}"></li>
+                <li sec:authorize="hasRole('ROLE_EXECUTOR')" th:text="${'Клиент по заявке: '+task.client}"></li>
+                <li th:text="${'Тема: '+task.subject}"></li>
+            </ul>
+            <div class="marginBottom0">Описание:</div>
+            <textarea rows="8" cols="60" readonly th:text="${task.description}" title="Заполняется при добавлении заявки" style="cursor: default;"></textarea>
+
+            <form action="task" method="post">
+                <input type="hidden" name="taskId" th:value="${task.id}" />
+                <input type="hidden" name="author" th:value="${#authentication.name}" />
+
+            <table sec:authorize="hasRole('ROLE_EXECUTOR')">
+                <tr>
+                    <td class="user ar">Выберите статус:</td>
+                    <td class="user">
+                        <select name="status" title="Выберите статус">
+                            <option th:each="status:${statuses}" th:text="${status}" th:selected="${status==task.status}">Исп. не назначен</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="user ar">Выберите исполнителя:</td>
+                    <td class="user">
+                        <select name="executor" title="Выберите исполнителя">
+                            <option th:each="executor:${executors}" th:text="${executor}" th:selected="${executor==task.executor}"></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <div class="marginBottom0">Добавить комментарий:</div>
+                <input type="text" name="remark" size="40" required placeholder="Проблема разрешилась" title="Обязательно заполнить" />
+                <input class="blue" type="submit" value="+" title="Добавить комментарий" />
+            </div>
+        </form>
+    </div>
+    <div class="block">
+        <table>
+            <tr>
+                <th>Дата</th>
+                <th sec:authorize="hasRole('ROLE_EXECUTOR')">Автор</th>
+                <th>Комментарии</th>
+            </tr>
+            <tr th:each="remark:${remarks}">
+                <td class="ac" th:text="${remark.remarkDate}"></td>
+                <td class="al" th:text="${remark.author}" sec:authorize="hasAnyRole('ROLE_EXECUTOR', 'ROLE_ADMIN')"></td>
+                <td class="al" th:text="${remark.remark}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="blockr"></div>
+    </div>
+</body>
+</html>

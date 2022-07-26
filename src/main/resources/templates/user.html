@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Helpdesk</title>
+    <meta charset="UTF-8">
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <input class="red" type="button" value="<" title="Список пользователей" onclick="location.href='/mgmt'" />
+        <span>Администратор</span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+
+    <div>
+        <div class="block">
+            <form action="user" method="post" name="user">
+                <input type="hidden" name="userId" th:value="${user.id}" />
+                <table>
+                    <tr>
+                        <td class="ar">Фамилия:</td>
+                        <td class="user"><input type="text" required placeholder="Фамилия" name="lastName"
+                                th:value="${user.lastName}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="ar">Имя:</td>
+                        <td class="user"><input type="text" required placeholder="Имя" name="firstName"
+                                th:value="${user.firstName}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="ar">Отчество:</td>
+                        <td class="user"><input type="text" required placeholder="Отчество" name="secondName"
+                                th:value="${user.SecondName}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="ar">Пароль:</td>
+                        <td class="user"><input type="password" required placeholder="********" name="password"
+                                th:value="${user.password}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="ar">Роль:</td>
+                        <td class="user">
+                            <select name="credentials">
+                                <option th:selected="${user.credentials=='ROLE_USER'} ">ROLE_USER</option>
+                                <option th:selected="${user.credentials=='ROLE_EXECUTOR'} ">ROLE_EXECUTOR</option>
+                            </select></td>
+                    </tr>
+                </table>
+                <span th:text="${'Обновить пользователя '+user.username}"></span><input class="blue" type="submit"
+                    value="+" title="Обновить пользователя" />
+            </form>
+        </div>
+        <div class="blockr"></div>
+    </div>
+</body>
+</html>
