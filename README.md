@@ -30,4 +30,18 @@
 docker run --rm -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -d postgres
 ```
 
-2. Создать таблицы...
+2. Создать базу данных:
+
+```
+... script.sql
+```
+
+3. Запуск:
+
+```
+... task-service-2.0
+```
+
+4. Управление учётными записями (admin / admin): [http://localhost:8080/mgmt](http://localhost:8080/mgmt)
+
+5. Управление списком задач: [http://localhost:8080/](http://localhost:8080/)
