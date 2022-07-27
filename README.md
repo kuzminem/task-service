@@ -27,21 +27,23 @@
 1. Запустить PostgreSQL в Docker-е:
 
 ```
-docker run --rm -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -d postgres
+docker run --name postgres_container --rm -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -p 5432:5432 -d postgres:alpine
 ```
 
-2. Создать базу данных:
+2. Скопировать SQL-скрипт из корня проекта:
 
 ```
-... script.sql
+docker cp script.sql postgres_container:/tmp/script.sql
 ```
 
-3. Запуск:
+3. Выполнить скрипт:
 
 ```
-... task-service-2.0
+docker exec -d postgres_container psql -d db -U user -f /tmp/script.sql
 ```
 
-4. Управление учётными записями (admin / admin): [http://localhost:8080/mgmt](http://localhost:8080/mgmt)
+4. Запустить приложение.
 
-5. Управление списком задач: [http://localhost:8080/](http://localhost:8080/)
+5. Управление учётными записями (admin / admin): [http://localhost:8080/mgmt](http://localhost:8080/mgmt).
+
+6. Управление списком задач: [http://localhost:8080/](http://localhost:8080/).
