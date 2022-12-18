@@ -25,14 +25,10 @@
 ```
 docker build -t postgres-image .
 ```
-
 2. Запускаем PostgreSQL:
 ```
 docker run -d --rm -p 5432:5432 postgres-image
 ```
-
 3. Запускаем приложение:
-
-* Управление учётными записями (admin / admin): [http://localhost:8080/mgmt](http://localhost:8080/mgmt).
-
-* Управление списками задач: [http://localhost:8080/](http://localhost:8080/).
+   * Управление учётными записями (admin / admin): [http://localhost:8080/mgmt](http://localhost:8080/mgmt).
+   * Управление списками задач: [http://localhost:8080/](http://localhost:8080/).
