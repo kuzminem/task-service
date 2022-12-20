@@ -3,14 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>task-service</groupId>
+
+    <groupId>ru.service.task</groupId>
     <artifactId>task-service</artifactId>
-    <version>2.0</version>
+    <version>0.9.1</version>
+    <packaging>jar</packaging>
     <name>task-service</name>
     <description>task-service</description>
+
     <properties>
-        <java.version>8</java.version>
-        <org.springframework.boot.version>2.7.0</org.springframework.boot.version>
+        <java.version>11</java.version>
+        <org.springframework.boot.version>2.7.6</org.springframework.boot.version>
     </properties>
 
     <dependencies>

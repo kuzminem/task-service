@@ -1,5 +1,6 @@
 package ru.service.task.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,20 +20,32 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Конфигурация.
- */
 @Configuration
 @EnableJpaRepositories(basePackages = "ru.service.task.repository")
 public class AppConfiguration {
 
+    @Value("${datasource.host}")
+    private String dataSourceHost;
+
+    @Value("${datasource.port}")
+    private String dataSourcePort;
+
+    @Value("${datasource.db}")
+    private String dataSourceDb;
+
+    @Value("${datasource.user}")
+    private String dataSourceUser;
+
+    @Value("${datasource.pass}")
+    private String dataSourcePass;
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/db");
+        dataSource.setUrl("jdbc:postgresql://" + dataSourceHost + ":" + dataSourcePort + "/" + dataSourceDb);
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUsername("user");
-        dataSource.setPassword("pass");
+        dataSource.setUsername(dataSourceUser);
+        dataSource.setPassword(dataSourcePass);
         return dataSource;
     }
 
