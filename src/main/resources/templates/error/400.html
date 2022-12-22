@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Helpdesk</title>
+    <meta charset="UTF-8">
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <input class="red" type="button" value="!" title="На главную" onclick="location.href='/'" />
+        <span th:text="${'Пользователь '+#authentication.name}"></span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+    <div sec:authorize="hasRole('ROLE_EXECUTOR')">
+        <input class="red" type="button" value="!" title="На главную" onclick="location.href='/'" />
+        <span th:text="${'Исполнитель '+#authentication.name}"></span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <input class="red" type="button" value="!" title="Администрировать" onclick="location.href='/mgmt'" />
+        <span>Администратор</span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+    <h1 class="error1">400</h1>
+    <h2 class="error2">Плохой запрос</h3>
+    </body>
+</html>

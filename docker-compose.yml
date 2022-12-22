@@ -1,0 +1,24 @@
+version: "2.1"
+
+services:
+
+  db:
+    image: postgres:alpine
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+
+  app:
+    image: bellsoft/liberica-openjdk-alpine:latest
+    container_name: app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target:/app
+    command: [ "java", "-jar", "/app/task-service-1.0.jar" ]

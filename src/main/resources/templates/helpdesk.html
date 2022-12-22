@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Helpdesk</title>
+    <meta charset="UTF-8">
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <input class="blue" type="button" value="+" title="Добавить задачу" onclick="location.href='/new'" />
+        <span sec:authorize="hasRole('ROLE_USER')" th:text="${'Пользователь '+#authentication.name}"></span>
+        <span sec:authorize="hasRole('ROLE_EXECUTOR')" th:text="${'Исполнитель '+#authentication.name}"></span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+        <form class="view" name="view" action="/" method="POST">
+            <select name="v" onchange="javascript:this.form.submit()" title="Какие заявки отображаются">
+                <option th:selected="${view==0}">Невыполненные</option>
+                <option th:selected="${view==1}">Исп. не назначен</option>
+                <option th:selected="${view==2}">В работе</option>
+                <option th:selected="${view==3}">В ожидании</option>
+                <option th:selected="${view==4}">Выполненные</option>
+                <option th:selected="${view==5}">Все</option>
+            </select>
+        </form>
+    </div>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Открыта</th>
+            <th sec:authorize="hasAnyRole('ROLE_EXECUTOR')">Клиент</th>
+            <th>Тема</th>
+            <th>Описание</th>
+            <th>Статус</th>
+            <th sec:authorize="hasAnyRole('ROLE_EXECUTOR')">Исполнитель</th>
+            <th>Дата выполнения</th>
+        </tr>
+        <tr class="h" th:each="task:${tasks}" th:attr="onclick=|location.href='/task?id=${task.id}'|"
+            title="Перейти в задачу">
+            <td class="ac bl" th:text="${task.id}"></td>
+            <td class="ac" th:text="${task.filingDate}"></td>
+            <td class="ac" th:text="${task.client}" sec:authorize="hasAnyRole('ROLE_EXECUTOR')"></td>
+            <td class="execsubj al" th:text="${task.subject}" sec:authorize="hasAnyRole('ROLE_EXECUTOR')"></td>
+            <td class="execdesc al" th:text="${task.description}" sec:authorize="hasAnyRole('ROLE_EXECUTOR')"></td>
+            <td class="al" th:text="${task.subject}" sec:authorize="hasAnyRole('ROLE_USER')"></td>
+            <td class="al" th:text="${task.description}" sec:authorize="hasAnyRole('ROLE_USER')"></td>
+            <td class="ac" th:text="${task.status}"></td>
+            <td class="ac" th:text="${task.executor}" sec:authorize="hasAnyRole('ROLE_EXECUTOR')"></td>
+            <td class="ac br" th:text="${task.completionDate}"></td>
+        </tr>
+    </table>
+</body>
+</html>

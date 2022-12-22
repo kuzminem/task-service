@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Helpdesk</title>
+    <meta charset="UTF-8">
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <input class="red" type="button" value="<" title="Вернуться" onclick="location.href='/'" />
+        <span sec:authorize="hasRole('ROLE_USER')" th:text="${'Пользователь '+#authentication.name}"></span>
+        <span sec:authorize="hasRole('ROLE_EXECUTOR')" th:text="${'Исполнитель '+#authentication.name}"></span>
+        <input class="yellow" type="button" value="X" title="Разлогиниться" onclick="location.href='/logout'" />
+        <input class="green" type="button" value="?" title="Справка" onclick="location.href='/help'" />
+    </div>
+    <form action="new" method="post">
+        <div>
+            <span>Тема:</span>
+            <input type="text" name="subject" size="40" required placeholder="Ничего не работает"
+                title="Обязательно заполнить" />
+        </div>
+        <div class="marginBottom0">Опишите вопрос:</div>
+        <textarea name="description" rows="8" cols="60" required placeholder="Я что-то нажала и всё пропало"
+            title="Обязательно заполнить"></textarea>
+        <div>
+            <span sec:authorize="hasRole('ROLE_USER')">Добавить задачу</span>
+            <input sec:authorize="hasRole('ROLE_USER')" type="hidden" name="client" th:value="${#authentication.name}" />
+            <span sec:authorize="hasRole('ROLE_EXECUTOR')">Добавить задачу от имени</span>
+            <select sec:authorize="hasRole('ROLE_EXECUTOR')" name="client" title="Выберите пользователя">
+                <option th:each="user:${users}" th:text="${user}" th:selected="${user==#authentication.name}"></option>
+            </select>
+            <input class="blue" type="submit" value="+" title="Добавить задачу" />
+        </div>
+    </form>
+</body>
+</html>
